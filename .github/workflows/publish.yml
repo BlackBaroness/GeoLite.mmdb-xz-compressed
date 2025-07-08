@@ -26,8 +26,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: latest
-        target_commitish: "main"
+        tag_name: "$(date -u +'%Y.%m.%d_%H.%M.%S.UTC')"
         files: |
           GeoLite2-City.mmdb
           GeoLite2-City.mmdb.sha512
