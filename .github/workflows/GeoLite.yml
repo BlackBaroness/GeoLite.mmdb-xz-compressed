@@ -16,9 +16,10 @@ jobs:
       run: |
           curl -L -o GeoLite2-City.mmdb "https://github.com/P3TERX/GeoLite.mmdb/releases/latest/download/GeoLite2-City.mmdb"
 
-    - name: Compress with xz
+    - name: Generate SHA-512 hash
       run: |
-          xz -9e -k -v GeoLite2-City.mmdb
+          sha512sum GeoLite2-City.mmdb > GeoLite2-City.mmdb.sha512
+          cat GeoLite2-City.mmdb.xz.sha512
 
     - name: Upload to Releases
       uses: softprops/action-gh-release@v2
@@ -27,12 +28,14 @@ jobs:
       with:
         tag_name: latest
         target_commitish: "main"
-        files: GeoLite2-City.mmdb.xz
+        files: |
+          GeoLite2-City.mmdb
+          GeoLite2-City.mmdb.sha512
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@v0.3.4
       with:
-        keep_latest: 2
+        keep_latest: 5
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,4 +44,4 @@ jobs:
       uses: Mattraks/delete-workflow-runs@v2.0.6
       with:
         retain_days: 0
-        keep_minimum_runs: 2
+        keep_minimum_runs: 5
