@@ -21,12 +21,16 @@ jobs:
           sha512sum GeoLite2-City.mmdb > GeoLite2-City.mmdb.sha512
           cat GeoLite2-City.mmdb.sha512
 
+    - name: Generate release tag
+      id: release_tag
+      run: echo "tag=$(date -u +'%Y.%m.%d_%H.%M.%S.UTC')" >> "$GITHUB_OUTPUT"
+
     - name: Upload to Releases
       uses: softprops/action-gh-release@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: "$(date -u +'%Y.%m.%d_%H.%M.%S.UTC')"
+        tag_name: ${{ steps.release_tag.outputs.tag }}
         files: |
           GeoLite2-City.mmdb
           GeoLite2-City.mmdb.sha512
