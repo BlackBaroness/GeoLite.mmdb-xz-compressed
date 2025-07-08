@@ -1,4 +1,4 @@
-name: Publish GeoLite.mmdb.xz
+name: Publish
 
 on:
   repository_dispatch:
