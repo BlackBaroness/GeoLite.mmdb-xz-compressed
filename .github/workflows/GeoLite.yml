@@ -19,7 +19,7 @@ jobs:
     - name: Generate SHA-512 hash
       run: |
           sha512sum GeoLite2-City.mmdb > GeoLite2-City.mmdb.sha512
-          cat GeoLite2-City.mmdb.xz.sha512
+          cat GeoLite2-City.mmdb.sha512
 
     - name: Upload to Releases
       uses: softprops/action-gh-release@v2
