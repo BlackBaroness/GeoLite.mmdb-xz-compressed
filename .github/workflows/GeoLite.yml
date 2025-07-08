@@ -1,4 +1,4 @@
-name: Publish GeoLite.xz
+name: Publish GeoLite.mmdb.xz
 
 on:
   repository_dispatch:
@@ -25,12 +25,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.TAG_NAME }}
-        body: ${{ env.TAG_NAME }}
+        tag_name: latest
+        target_commitish: "main"
         files: GeoLite2-City.mmdb.xz
 
     - name: Remove old Releases
-      uses: dev-drprasad/delete-older-releases@master
+      uses: dev-drprasad/delete-older-releases@v0.3.4
       with:
         keep_latest: 2
         delete_tags: true
@@ -38,7 +38,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Delete workflow runs
-      uses: Mattraks/delete-workflow-runs@main
+      uses: Mattraks/delete-workflow-runs@v2.0.6
       with:
         retain_days: 0
         keep_minimum_runs: 2
